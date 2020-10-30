@@ -1,0 +1,29 @@
+{% extends  'base.html.twig' %}
+
+{% block title 'Agence Lorem Ipsum' %}
+
+{% block body %}
+<div class="jumbotron text-center">
+    <h1>Agence Lorem ipsum </h1>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero perspiciatis laboriosam minima dolorem possimus, ut corporis doloribus aliquam iusto nostrum quam est. Minus, sint cupiditate ab expedita quibusdam enim recusandae?</p>
+</div>    
+
+<div class="container">
+    <h2>Les derniers biens</h2>
+    <div class="row-flex">
+        {% for property in properties %}
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <a href=" {{ path('property.show', {id: property.id, slug:property.slug})}}"> {{ property.title }}</a>
+                    </div>
+                    <p class="card-text"> {{ property.city}} ({{ property.postalcode }})</p>
+                    <div class="text-primary" style="font-weight: bold; font-size: 2rem">{{ property.formatedPrice }} $ </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+ {% endblock body %}
