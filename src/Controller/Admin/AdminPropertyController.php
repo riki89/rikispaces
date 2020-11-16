@@ -33,7 +33,27 @@ class AdminPropertyController extends AbstractController
     }
 
     /**
-     * @Route("admin/{id}", name="admin.property.edit")
+     * @Route("/admin/property/create", name="admin.property.new")
+     */
+    public function new(Request $request){
+        $property = new Property();
+        $form = $this->createForm(PropertyType::class, $property);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            # code...
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($property);
+            $em->flush();
+            return $this->redirectToRoute('admin.property.index');
+        }
+        return $this->render('admin/property/new.html.twig', [
+            'property' => $property,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("admin/property/{id}", name="admin.property.edit", methods="GET|POST")
      * @param Property $property
      * @param Request $request
      * @return Response
@@ -53,5 +73,21 @@ class AdminPropertyController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+
+    /**
+     * @Route("admin/property/{id}", name="admin.property.delete", methods="DLETE")
+     * @param Property $property
+     * @param Request $request
+     * @return Response
+     */
+    public function delete(Property $property, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        //$em->remove($property);
+        //$em->flush();
+        return new Response('Suppression');
+
+        return $this->redirectToRoute('admin.property.index');
     }
 }
