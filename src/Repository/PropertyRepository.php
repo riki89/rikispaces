@@ -31,6 +31,15 @@ class PropertyRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAllProfiles(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Property[] Returns an array of Property objects
     //  */
